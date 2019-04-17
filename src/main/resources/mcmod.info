@@ -1,0 +1,16 @@
+[
+{
+  "modid": "bpsPatcher",
+  "name": "BPS Patcher Mod",
+  "description": "A mod that allows to patch mods with BPS files. This is useful if you don't have the rights to publish modified versions of a mod, but still need to modify them for some reason. I.e. for bug fixes or to port them to newer/older Minecraft versions.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["bartimaeusnek"],
+  "credits": "Boris Timofeev, for the UniPatcher, which this is based on",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
