@@ -40,11 +40,11 @@ public class Pair<A, B> implements Map.Entry {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Pair)) return false;
-
+        if (this == o)
+            return true;
+        if (!(o instanceof Pair))
+            return false;
         Pair<?, ?> pair1 = (Pair<?, ?>) o;
-
         return Arrays.equals(pair, pair1.pair);
     }
 

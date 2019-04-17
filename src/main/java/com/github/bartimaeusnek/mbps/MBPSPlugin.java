@@ -14,6 +14,7 @@ import java.util.Map;
 public class MBPSPlugin implements IFMLLoadingPlugin {
     public static File minecraftDir = null;
     public static boolean wasPatched = false;
+
     public MBPSPlugin() {
         //Injection Code taken from CodeChickenLib
         if (minecraftDir != null)
@@ -21,8 +22,8 @@ public class MBPSPlugin implements IFMLLoadingPlugin {
         minecraftDir = (File) FMLInjectionData.data()[6];
 
         Configuration c = new Configuration(new File(new File(minecraftDir, "MBPS"), "config.cfg"));
-        String[] tmp = c.get("Patches","Patch/Original List",new String[0],"FIRST Name of Patch, NEW LINE, Name of Original").getStringList();
-        String[] update = c.get("Patches","UpdateList",new String[0],"Place the name of the Files here, that get Updated").getStringList();
+        String[] tmp = c.get("Patches", "Patch/Original List", new String[0], "FIRST Name of Patch, NEW LINE, Name of Original").getStringList();
+        String[] update = c.get("Patches", "UpdateList", new String[0], "Place the name of the Files here, that get Updated").getStringList();
         Map<String, String> patchmap = new LinkedHashMap<String, String>();
         if (tmp.length != 0) {
             for (int i = 1; i < tmp.length; i++) {
@@ -32,26 +33,26 @@ public class MBPSPlugin implements IFMLLoadingPlugin {
             }
         }
 
-        for (String s : patchmap.keySet()){
-            File nu =new File(new File(minecraftDir, "mods"),s.substring(0,s.length()-4)+".jar");
-            if (!(nu.exists())){
-                File patch = new File(new File(new File(minecraftDir,"MBPS"),"Patches"),s);
-                File original = new File(new File(new File(minecraftDir,"MBPS"),"Originals"),patchmap.get(s));
+        for (String s : patchmap.keySet()) {
+            File nu = new File(new File(minecraftDir, "mods"), s.substring(0, s.length() - 4) + ".jar");
+            if (!(nu.exists())) {
+                File patch = new File(new File(new File(minecraftDir, "MBPS"), "Patches"), s);
+                File original = new File(new File(new File(minecraftDir, "MBPS"), "Originals"), patchmap.get(s));
                 try {
-                    new BPSpatcher(patch,original,nu).patch();
+                    new BPSpatcher(patch, original, nu).patch();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                wasPatched =true;
+                wasPatched = true;
             }
         }
         if (update.length != 0) {
-            for (String s : update){
+            for (String s : update) {
                 if (s.contains(".bps") || s.contains(".BPS"))
-                    s=s.substring(0,s.length()-4)+".jar";
+                    s = s.substring(0, s.length() - 4) + ".jar";
                 if (!s.contains("."))
-                    s=s+".jar";
-                File nu =new File(new File(minecraftDir, "mods"),s);
+                    s = s + ".jar";
+                File nu = new File(new File(minecraftDir, "mods"), s);
                 if (nu.exists())
                     nu.delete();
             }

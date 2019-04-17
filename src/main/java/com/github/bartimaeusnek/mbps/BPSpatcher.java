@@ -40,15 +40,15 @@ public class BPSpatcher {
     public final void patch() throws IOException {
         byte[] patch = FileUtils.readFileToByteArray(this.patchFile);
         int patchPos = 4;
-        Pair<Integer,Integer> decoded = this.decode(patch, patchPos);
-        patchPos =  decoded.getValue();
+        Pair<Integer, Integer> decoded = this.decode(patch, patchPos);
+        patchPos = decoded.getValue();
         byte[] rom = FileUtils.readFileToByteArray(this.originalFile);
         decoded = this.decode(patch, patchPos);
-        patchPos =  decoded.getValue();
+        patchPos = decoded.getValue();
         byte[] output = new byte[decoded.getKey()];
         int outputPos = 0;
         decoded = this.decode(patch, patchPos);
-        patchPos =  decoded.getValue() + decoded.getKey();
+        patchPos = decoded.getValue() + decoded.getKey();
         int romRelOffset = 0;
         int outRelOffset = 0;
         int offset;
@@ -56,8 +56,8 @@ public class BPSpatcher {
         byte mode;
         while (patchPos < patch.length - 12) {
             decoded = this.decode(patch, patchPos);
-            length =  decoded.getKey();
-            patchPos =  decoded.getValue();
+            length = decoded.getKey();
+            patchPos = decoded.getValue();
             mode = (byte) (length & 0x3);
             length = (length >> 2) + 1;
             switch (mode) {
@@ -73,8 +73,8 @@ public class BPSpatcher {
                 case 2:
                 case 3: {
                     decoded = this.decode(patch, patchPos);
-                    offset =  decoded.getKey();
-                    patchPos =  decoded.getValue();
+                    offset = decoded.getKey();
+                    patchPos = decoded.getValue();
                     offset = (((offset & 0x1) == 0x1) ? -1 : 1) * (offset >> 1);
                     if (mode == 2) {
                         romRelOffset += offset;
