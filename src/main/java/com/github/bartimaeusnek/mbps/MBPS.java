@@ -7,7 +7,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 import javax.swing.*;
 
-@Mod(modid = "mpbs", version = "0.0.1", name = "BPS Patcher Mod")
+@Mod(modid = "mpbs", version = "0.0.2", name = "BPS Patcher Mod", acceptableRemoteVersions = "*")
 public class MBPS {
 
     @Mod.EventHandler

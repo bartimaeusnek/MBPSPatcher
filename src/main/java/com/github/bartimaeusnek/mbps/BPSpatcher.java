@@ -25,19 +25,19 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 
-public class BPSpatcher {
+class BPSpatcher {
     private final File patchFile;
     private final File originalFile;
     private final File outputFile;
 
-    public BPSpatcher(File patchFile, File originalFile, File outputFile) {
+    BPSpatcher(File patchFile, File originalFile, File outputFile) {
         this.patchFile = patchFile;
         this.originalFile = originalFile;
         this.outputFile = outputFile;
         this.outputFile.deleteOnExit();
     }
 
-    public final void patch() throws IOException {
+    final void patch() throws IOException {
         byte[] patch = FileUtils.readFileToByteArray(this.patchFile);
         int patchPos = 4;
         Pair<Integer, Integer> decoded = this.decode(patch, patchPos);

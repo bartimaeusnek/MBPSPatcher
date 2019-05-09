@@ -33,7 +33,7 @@ public class Pair<A, B> implements Map.Entry {
         this.pair = pair;
     }
 
-    public Pair(A k, B v) {
+    Pair(A k, B v) {
         this.pair[0] = k;
         this.pair[1] = v;
     }

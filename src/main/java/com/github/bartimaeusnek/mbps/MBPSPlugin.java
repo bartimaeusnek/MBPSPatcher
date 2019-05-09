@@ -3,18 +3,21 @@ package com.github.bartimaeusnek.mbps;
 import cpw.mods.fml.relauncher.FMLInjectionData;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import net.minecraftforge.common.config.Configuration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@IFMLLoadingPlugin.SortingIndex(-999999999) //load this before anything else
 @IFMLLoadingPlugin.MCVersion("1.7.10")
 @IFMLLoadingPlugin.Name("mbps")
 public class MBPSPlugin implements IFMLLoadingPlugin {
-    public static File minecraftDir = null;
-    public static boolean wasPatched = false;
-
+    private static File minecraftDir = null;
+    static boolean wasPatched = false;
+    Logger logger = LogManager.getLogger("BPS Patcher");
     public MBPSPlugin() {
         //Injection Code taken from CodeChickenLib
         if (minecraftDir != null)
@@ -32,17 +35,21 @@ public class MBPSPlugin implements IFMLLoadingPlugin {
                 }
             }
         }
-
+        int done = 0;
         for (String s : patchmap.keySet()) {
             File nu = new File(new File(minecraftDir, "mods"), s.substring(0, s.length() - 4) + ".jar");
             if (!(nu.exists())) {
-                File patch = new File(new File(new File(minecraftDir, "MBPS"), "Patches"), s);
-                File original = new File(new File(new File(minecraftDir, "MBPS"), "Originals"), patchmap.get(s));
+                File patch = new File(new File(minecraftDir, "MBPS"), s);
+                File original = new File(new File(minecraftDir, "mods"), patchmap.get(s));
                 try {
+                    logger.info("Patching "+original.getName()+" to "+patch.getName().substring(0,patch.getName().length() - 4)+".jar!");
                     new BPSpatcher(patch, original, nu).patch();
+                    original.delete();
+                    done++;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                logger.info(done +" of "+patchmap.keySet().size()+" patched!");
                 wasPatched = true;
             }
         }
