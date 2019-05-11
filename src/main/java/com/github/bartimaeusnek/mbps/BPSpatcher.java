@@ -34,10 +34,9 @@ class BPSpatcher {
         this.patchFile = patchFile;
         this.originalFile = originalFile;
         this.outputFile = outputFile;
-        this.outputFile.deleteOnExit();
     }
 
-    final void patch() throws IOException {
+    final boolean patch() throws IOException {
         byte[] patch = FileUtils.readFileToByteArray(this.patchFile);
         int patchPos = 4;
         Pair<Integer, Integer> decoded = this.decode(patch, patchPos);
@@ -91,6 +90,7 @@ class BPSpatcher {
             }
         }
         FileUtils.writeByteArrayToFile(this.outputFile, output);
+        return true;
     }
 
     private Pair<Integer, Integer> decode(byte[] array, int pos) {
