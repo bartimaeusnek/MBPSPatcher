@@ -37,6 +37,7 @@ public class MBPSPlugin implements IFMLLoadingPlugin {
         if (minecraftDir != null)
             return;//get called twice, once for IFMLCallHook
         minecraftDir = (File) FMLInjectionData.data()[6];
+        SpecialDepLoader.load();
         Configuration c = new Configuration(new File(new File(minecraftDir, "MBPS"), "config.cfg"));
         String[] tmp = c.get("Patches", "Patch/Original List", new String[0], "FIRST Name of Patch, NEW LINE, Name of Original").getStringList();
 
